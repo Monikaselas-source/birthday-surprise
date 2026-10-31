@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Birthday Surprise ❤️</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            text-align: center;
+            background: linear-gradient(135deg, #240046, #9d174d, #ff1493);
+            color: white;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;w
+        }
+
+        h1 {
+            color: #ffb6e6;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            background: #ff4da6;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+            margin: 12px;
+        }
+
+        button:hover {
+            background: #ff1493;
+            transform: scale(1.05);
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            width: 85%;
+            max-width: 500px;
+            box-shadow: 0 0 25px #ff69b4;
+        }
+
+        label {
+            display: block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            margin: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        #finalSurprise {
+            display: none;
+        }
+
+        .heart-container {
+            perspective: 1000px;
+            margin: 50px;
+        }
+
+        .heart {
+            font-size: 160px;
+            animation: heartbeat 1.5s infinite;
+            filter: drop-shadow(0 0 30px hotpink);
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1) rotateY(0deg);
+            }
+
+            50% {
+                transform: scale(1.3) rotateY(180deg);
+            }
+
+            100% {
+                transform: scale(1) rotateY(360deg);
+            }
+        }
+
+        .gift {
+            font-size: 100px;
+            cursor: pointer;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .rose {
+            font-size: 80px;
+            animation: heartbeat 2s infinite;
+        }
+
+        #message {
+            color: #ffe4f2;
+        }
+
+        #answers p {
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PASSWORD PAGE -->
+
+    <div class="page" id="passwordPage">
+        <div class="box">
+            <h1>🔐 Secret Birthday Surprise</h1>
+            <p>Enter the secret password ❤️</p>
+
+            <input type="password" id="password" placeholder="Enter password">
+
+            <br>
+
+            <button onclick="checkPassword()">Unlock ❤️</button>
+
+            <p id="passwordMessage"></p>
+        </div>
+    </div>
+
+
+    <!-- WELCOME PAGE -->
+
+    <div class="page" id="welcomePage" style="display:none;">
+        <div class="box">
+            <h1>🎉 Welcome! 🎉</h1>
+
+            <h2>A Little Surprise For You ❤️</h2>
+
+            <p>Are you ready for some fun?</p>
+
+            <div class="gift" onclick="startQuiz()">🎁</div>
+
+            <p>Click the gift box!</p>
+        </div>
+    </div>
+
+
+    <!-- QUIZ PAGE -->
+
+    <div class="page" id="quizPage" style="display:none;">
+        <div class="box">
+
+            <h1>😂 Funny Quiz 😂</h1>
+
+            <h3 id="question"></h3>
+
+            <div id="options"></div>
+
+            <input type="text" id="userAnswer" placeholder="Type your answer..." style="display:none;">
+
+            <br>
+
+            <button onclick="submitAnswer()">Submit ❤️</button>
+
+            <p id="message"></p>
+
+            <p id="progress"></p>
+
+        </div>
+    </div>
+
+
+    <!-- ANSWERS PAGE -->
+
+    <div class="page" id="result" style="display:none;">
+        <div class="box">
+
+            <h1>😂 Your Answers 😂</h1>
+
+            <div id="answers"></div>
+
+            <button onclick="showFinalSurprise()">
+                🎁 Final Surprise
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- FINAL SURPRISE PAGE -->
+
+    <div class="page" id="finalSurprise">
+
+        <h1>🎉 Your Final Surprise 🎉</h1>
+
+        <div class="heart-container">
+            <div class="heart">❤️</div>
+        </div>
+
+        <h1>Happy Birthday  Dharun! 🥳</h1>
+
+        <h2>You Are Truly Special! 💖</h2>
+
+        <div class="rose">💗</div>
+
+        <h2>Keep Smiling and Stay Happy! ❤️</h2>
+
+        <p>Lots of love and happiness! ✨</p>
+
+        <h1>🎂🎁🎊</h1>
+
+    </div>
+
+
+    <script>
+
+        // CHANGE YOUR OWN PASSWORD HERE
+
+        const SECRET_PASS_KEY = "01/11/2006";
+
+
+        // PASSWORD CHECK
+
+        function checkPassword() {
+
+            let pass = document.getElementById("password").value;
+
+            if (pass === SECRET_PASS_KEY) {
+
+                document.getElementById("passwordPage").style.display = "none";
+
+                document.getElementById("welcomePage").style.display = "flex";
+
+            } else {
+
+                document.getElementById("passwordMessage").innerText =
+                    "Wrong Password! Try Again ❤️";
+
+            }
+
+        }
+
+
+        // QUESTIONS
+
+        let questions = [
+
+            {
+                question: "Who I am?",
+                type: "option",
+                options: [
+                    "love💖",
+                    "friends👥 ",
+                    "sister✨",
+                    "crush💗"
+                ]
+            },
+
+            {
+                question: "Na na pudikkum ma , yavalo",
+                type: "text"
+            },
+
+            {
+                question: "If a ghost proposes to you, what will you say?",
+                type: "option",
+                options: [
+                    "Yes, let's haunt together 👻",
+                    "Sorry, committed 😂",
+                    "Show Aadhaar first 🤣",
+                    "Block immediately 📵"
+                ]
+            },
+
+            {
+                question: "What is your biggest talent? 😂",
+                type: "text"
+            },
+            {
+                question: "En birthday podu",
+                type: "text",
+
+
+
+
+            }
+
+        ];
+
+
+        let current = 0;
+
+        let userAnswers = [];
+
+
+        // START QUIZ
+
+        function startQuiz() {
+
+            document.getElementById("welcomePage").style.display = "none";
+
+            document.getElementById("quizPage").style.display = "flex";
+
+            loadQuestion();
+
+        }
+
+
+        // LOAD QUESTION
+
+        function loadQuestion() {
+
+            document.getElementById("message").innerText = "";
+
+            document.getElementById("question").innerText =
+                "Q" + (current + 1) + ". " + questions[current].question;
+
+            document.getElementById("progress").innerText =
+                "Question " + (current + 1) + " / " + questions.length;
+
+            let options = document.getElementById("options");
+
+            let input = document.getElementById("userAnswer");
+
+            options.innerHTML = "";
+
+            input.value = "";
+
+            if (questions[current].type === "option") {
+
+                input.style.display = "none";
+
+                questions[current].options.forEach(function (option) {
+
+                    options.innerHTML += `
+                <label>
+                    <input type="radio" name="answer" value="${option}">
+                    ${option}
+                </label>
+            `;
+
+                });
+
+            } else {
+
+                input.style.display = "block";
+
+            }
+
+        }
+
+
+        // SUBMIT ANSWER
+
+        function submitAnswer() {
+
+            let answer = "";
+
+            if (questions[current].type === "option") {
+
+                let selected = document.querySelector(
+                    'input[name="answer"]:checked'
+                );
+
+                if (selected === null) {
+
+                    document.getElementById("message").innerText =
+                        "Please select an answer! ❤️";
+
+
+                    return;
+
+                }
+
+                answer = selected.value;
+
+            } else {
+
+                answer = document.getElementById("userAnswer").value.trim();
+
+                if (answer === "") {
+
+                    document.getElementById("message").innerText =
+                        "Please type your answer! ❤️";
+
+                    return;
+
+                }
+
+            }
+
+
+            userAnswers.push({
+
+                question: questions[current].question,
+
+                answer: answer
+
+            });
+
+
+            current++;
+
+
+            if (current < questions.length) {
+
+                loadQuestion();
+
+            } else {
+
+                showAnswers();
+
+            }
+
+        }
+
+
+        // SHOW ANSWERS
+
+        function showAnswers() {
+
+            document.getElementById("quizPage").style.display = "none";
+
+            document.getElementById("result").style.display = "flex";
+
+            let output = "";
+
+            userAnswers.forEach(function (item, index) {
+
+                output += `
+            <p><b>Q${index + 1}. ${item.question}</b></p>
+
+            <p>Your Answer: ${item.answer}</p>
+
+            <hr>
+        `;
+
+            });
+
+
+            document.getElementById("answers").innerHTML = output;
+
+        }
+
+
+        // FINAL SURPRISE
+
+        function showFinalSurprise() {
+
+            document.getElementById("result").style.display = "none";
+
+            document.getElementById("finalSurprise").style.display = "flex";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
